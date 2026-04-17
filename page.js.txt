@@ -1,0 +1,7 @@
+ricorico/
+├── app/
+│   ├── layout.js
+│   └── page.js
+├── package.json
+├── next.config.js
+└── README.md

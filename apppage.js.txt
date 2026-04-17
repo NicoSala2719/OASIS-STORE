@@ -1,0 +1,219 @@
+use client;
+import React, { useState } from react;
+
+const whatsappLink = httpswa.me5492617025691;
+const ADMIN_PASSWORD = RicoRico220125;
+
+ ☁️ CLOUDINARY
+const CLOUD_NAME = djzaz3yzl;
+const UPLOAD_PRESET = RICORICO;
+
+export default function Home() {
+  const [cart, setCart] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [logged, setLogged] = useState(false);
+
+  const [products, setProducts] = useState({
+    donas [
+      { name Donitas Simples, price 4000, img  },
+      { name Donitas Chocolate, price 4400, img  },
+      { name Donitas Oreo, price 5000, img  },
+      { name Donitas Coco, price 4500, img  },
+      { name Donitas Rocklets, price 4800, img  },
+      { name Donitas Crocantes, price 4700, img  },
+      { name Donitas Glaseadas, price 4400, img  },
+      { name Donitas Saborizadas, price 4500, img  },
+    ],
+    alfajores [
+      { name Alfajores Maicena, price 5000, img  },
+      { name Alfajores Chocolate, price 8500, img  },
+      { name Alfajores Chips, price 7000, img  },
+    ],
+    galletas [
+      { name Galletas Chips Chocolate, price 3000, img  },
+      { name Galletas Bañadas Chocolate, price 4000, img  },
+      { name Galletas Saborizadas, price 2700, img  },
+      { name Galletas Marmoladas, price 3200, img  },
+    ],
+    bizcochuelos [
+      { name Bizcochuelo Marmolado, price 9500, img  },
+      { name Bizcochuelo Mandarina, price 9500, img  },
+      { name Bizcochuelo Limón, price 9500, img  },
+      { name Bizcochuelo Chocolate, price 9500, img  },
+    ],
+    budines [
+      { name Budín Marmolado, price 9500, img  },
+      { name Budín Mandarina, price 9500, img  },
+      { name Budín Limón, price 9500, img  },
+      { name Budín Chocolate, price 9500, img  },
+    ],
+    magdalenas [
+      { name Magdalena Chips Chocolate, price 5000, img  },
+      { name Magdalena Chocolate, price 5000, img  },
+      { name Magdalena Vainilla, price 5000, img  },
+    ],
+  });
+
+  const loginAdmin = () = {
+    const pass = prompt(Ingrese contraseña admin);
+    if (pass === ADMIN_PASSWORD) {
+      setLogged(true);
+      setIsAdmin(true);
+    } else {
+      alert(Contraseña incorrecta);
+    }
+  };
+
+  const addToCart = (item) = setCart([...cart, item]);
+
+  const total = cart.reduce((acc, item) = acc + item.price, 0);
+
+  const sendWhatsAppCart = () = {
+    const text = `Pedido%0A${cart
+      .map((i) = `- ${i.name}`)
+      .join(%0A)}%0ATotal $${total}`;
+    window.open(`${whatsappLink}text=${text}`, _blank);
+  };
+
+  const updatePrice = (category, index, value) = {
+    const updated = { ...products };
+    updated[category][index].price = Number(value);
+    setProducts(updated);
+  };
+
+  const uploadImage = async (category, index, file) = {
+    const formData = new FormData();
+    formData.append(file, file);
+    formData.append(upload_preset, UPLOAD_PRESET);
+
+    try {
+      const res = await fetch(
+        `httpsapi.cloudinary.comv1_1${CLOUD_NAME}imageupload`,
+        {
+          method POST,
+          body formData,
+        }
+      );
+
+      const data = await res.json();
+
+      if (!data.secure_url) {
+        alert(Error subiendo imagen);
+        return;
+      }
+
+      const updated = { ...products };
+      updated[category][index].img = data.secure_url;
+      setProducts(updated);
+    } catch {
+      alert(Error de conexión con Cloudinary);
+    }
+  };
+
+  return (
+    div className=min-h-screen bg-gray-100
+
+      { HEADER }
+      div className=text-white bg-black p-6 flex flex-col items-center gap-4
+        h1 className=italic text-4xl font-bold text-centerRICORICOh1
+
+        div className=flex items-center gap-4
+          a
+            href=httpsinstagram.comricodulce__
+            target=_blank
+            className=flex items-center gap-2 bg-pink-500 px-4 py-2 rounded-full
+          
+            📸 @ricodulce__
+          a
+
+          button
+            onClick={sendWhatsAppCart}
+            className=bg-green-500 px-4 py-2 rounded
+          
+            Pedido (${total})
+          button
+        div
+      div
+
+      { ADMIN }
+      {!logged && (
+        button
+          onClick={loginAdmin}
+          className=fixed top-4 right-4 bg-yellow-500 px-3 py-1 rounded
+        
+          Admin
+        button
+      )}
+
+      { PRODUCTOS }
+      div className=max-w-5xl mx-auto
+        {Object.entries(products).map(([cat, items]) = (
+          div key={cat} className=bg-white m-4 p-6 rounded-xl shadow
+            h2 className=text-xl font-bold mb-4 text-center{cat}h2
+
+            div className=grid grid-cols-2 mdgrid-cols-3 gap-4
+              {items.map((item, i) = (
+                div key={i} className=border p-3 rounded text-center
+
+                  {item.img  (
+                    img src={item.img} className=h-28 w-full object-cover mb-2 rounded 
+                  )  (
+                    div className=h-28 bg-gray-200 flex items-center justify-center mb-2 text-sm
+                      Subir imagen
+                    div
+                  )}
+
+                  p className=font-semibold{item.name}p
+
+                  {isAdmin  (
+                    
+                      input
+                        type=number
+                        value={item.price}
+                        onChange={(e) = updatePrice(cat, i, e.target.value)}
+                        className=border w-full mt-1
+                      
+
+                      input
+                        type=file
+                        accept=image
+                        onChange={(e) = uploadImage(cat, i, e.target.files[0])}
+                        className=mt-2
+                      
+                    
+                  )  (
+                    p${item.price}p
+                  )}
+
+                  button
+                    onClick={() = addToCart(item)}
+                    className=bg-blue-500 text-white w-full mt-2
+                  
+                    Agregar
+                  button
+
+                  a
+                    href={`${whatsappLink}text=Hola quiero ${item.name}`}
+                    target=_blank
+                    className=block bg-green-500 text-white mt-2
+                  
+                    WhatsApp
+                  a
+                div
+              ))}
+            div
+          div
+        ))}
+      div
+
+      { BOTÓN WHATSAPP }
+      a
+        href={whatsappLink}
+        target=_blank
+        className=fixed bottom-6 right-6 bg-green-500 p-4 rounded-full text-xl
+      
+        💬
+      a
+    div
+  );
+}
